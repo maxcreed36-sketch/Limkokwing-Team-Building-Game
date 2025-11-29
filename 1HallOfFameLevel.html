@@ -85,6 +85,7 @@
                 },
                 (decodedText) => {
                     // Redirect to the scanned URL
+                    alert(`QR Code detected: ${decodedText}`);
                     window.location.href = decodedText;
                 },
                 (errorMessage) => {
@@ -92,6 +93,7 @@
                 }
             ).catch((err) => {
                 console.error(`Unable to start QR Code scanner: ${err}`);
+                alert("Unable to access the camera. Please check your permissions.");
             });
         }
     </script>
