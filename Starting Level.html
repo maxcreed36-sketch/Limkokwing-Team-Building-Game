@@ -65,6 +65,33 @@
         background-attachment: scroll; /* Better on mobile */
       }
     }
+
+    /* Additional styles for treasure theme */
+    .treasure-hero {
+      width: 100%;
+      height: 100vh;
+      background-image: url('https://example.com/treasure-map.jpg'); /* Replace with actual treasure image URL */
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-color: #e0e0e0; /* Fallback color */
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    .treasure-content {
+      padding: 80px 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+      background-color: #f9f9f9;
+      text-align: center;
+    }
+
+    .treasure-content p {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      text-align: left;
+      line-height: 1.8;
+    }
   </style>
 </head>
 <body>
@@ -85,6 +112,17 @@
     </p>
     <p>
       Feel free to replace this text with your actual event description, team-building details, or anything you like!
+    </p>
+  </section>
+
+  <!-- Treasure theme image -->
+  <div class="treasure-hero"></div>
+
+  <!-- Paragraph content -->
+  <section class="treasure-content">
+    <p>
+      Embark on an exciting treasure hunt adventure! Solve riddles, uncover hidden clues, and explore the mysteries of the unknown. 
+      Join us for a day filled with fun, teamwork, and unforgettable memories.
     </p>
   </section>
 
