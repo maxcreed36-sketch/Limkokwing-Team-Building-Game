@@ -50,6 +50,30 @@
         }
         #qr-reader {
             margin-top: 20px;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #qr-reader-results {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+        }
+        .stop-button {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 16px;
+            font-size: 14px;
+            color: white;
+            background-color: #dc3545;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .stop-button:hover {
+            background-color: #c82333;
         }
     </style>
     <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
@@ -69,32 +93,79 @@
 
         <!-- QR Code Reader -->
         <div id="qr-reader" style="display: none;"></div>
+        <div id="qr-reader-results"></div>
     </div>
 
     <script>
+        let html5QrCode = null;
+        
         function startQRCodeScanner() {
             const qrReader = document.getElementById("qr-reader");
+            const qrReaderResults = document.getElementById("qr-reader-results");
+            
+            // Clear previous results
+            qrReaderResults.innerHTML = "";
+            
+            // Show the scanner
             qrReader.style.display = "block";
-
-            const html5QrCode = new Html5Qrcode("qr-reader");
+            
+            // Initialize the scanner
+            html5QrCode = new Html5Qrcode("qr-reader");
+            
+            // Start scanning
             html5QrCode.start(
                 { facingMode: "environment" }, // Use the back camera
                 {
                     fps: 10, // Frames per second
-                    qrbox: 250 // Size of the scanning box
+                    qrbox: { width: 250, height: 250 } // Size of the scanning box
                 },
                 (decodedText) => {
-                    // Redirect to the scanned URL
-                    alert(`QR Code detected: ${decodedText}`);
-                    window.location.href = decodedText;
+                    // Success callback
+                    qrReaderResults.innerHTML = `
+                        <p>QR Code detected: <strong>${decodedText}</strong></p>
+                        <p>Redirecting in 3 seconds...</p>
+                    `;
+                    
+                    // Redirect after a short delay
+                    setTimeout(() => {
+                        window.location.href = decodedText;
+                    }, 3000);
                 },
                 (errorMessage) => {
-                    console.warn(`QR Code scan error: ${errorMessage}`);
+                    // Error callback - ignore most errors as they're common during scanning
+                    // console.warn(`QR Code scan error: ${errorMessage}`);
                 }
             ).catch((err) => {
                 console.error(`Unable to start QR Code scanner: ${err}`);
-                alert("Unable to access the camera. Please check your permissions.");
+                qrReaderResults.innerHTML = `
+                    <p style="color: red;">Unable to access the camera. Please check your permissions.</p>
+                    <p>Common issues:</p>
+                    <ul style="text-align: left; display: inline-block;">
+                        <li>Camera permission denied</li>
+                        <li>Using HTTP instead of HTTPS</li>
+                        <li>Browser doesn't support camera access</li>
+                    </ul>
+                `;
             });
+            
+            // Add a stop button
+            const stopButton = document.createElement("button");
+            stopButton.textContent = "Stop Scanner";
+            stopButton.className = "stop-button";
+            stopButton.onclick = stopQRCodeScanner;
+            qrReader.appendChild(stopButton);
+        }
+        
+        function stopQRCodeScanner() {
+            if (html5QrCode) {
+                html5QrCode.stop().then(() => {
+                    console.log("QR Code scanner stopped.");
+                    document.getElementById("qr-reader").style.display = "none";
+                    document.getElementById("qr-reader-results").innerHTML = "";
+                }).catch((err) => {
+                    console.error("Failed to stop QR Code scanner:", err);
+                });
+            }
         }
     </script>
 </body>
