@@ -33,6 +33,80 @@
             line-height: 1.6;
             color: #444;
         }
+        
+        /* Password Section Styles */
+        .password-section {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .password-input {
+            width: 70%;
+            max-width: 300px;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .password-input:focus {
+            border-color: #4a90e2;
+            outline: none;
+        }
+        
+        .submit-btn {
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background-color: #3a7bc8;
+        }
+        
+        .message {
+            margin-top: 15px;
+            font-size: 16px;
+            min-height: 24px;
+        }
+        
+        .success {
+            color: #2ecc71;
+        }
+        
+        .error {
+            color: #e74c3c;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .next-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            background-color: #2ecc71;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        .next-link:hover {
+            background-color: #27ae60;
+        }
     </style>
 </head>
 <body>
@@ -44,6 +118,62 @@
             and some text below. You can replace the image and text with anything you like. 
             The image has a nice dark border and rounded corners to make it look modern and elegant.
         </p>
+        
+        <div class="password-section">
+            <h3>Enter Password to Continue</h3>
+            <input type="password" class="password-input" placeholder="Enter password here">
+            <br>
+            <button class="submit-btn">Submit</button>
+            <div class="message"></div>
+            <a href="https://maxcreed36-sketch.github.io/Limkokwing-Team-Building-Game/1HallOfFameLevel.html#" 
+               class="next-link hidden">Proceed to Next Page</a>
+        </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.querySelector('.password-input');
+            const submitBtn = document.querySelector('.submit-btn');
+            const messageDiv = document.querySelector('.message');
+            const nextLink = document.querySelector('.next-link');
+            
+            const correctPassword = "MarkIsHandsome";
+            
+            submitBtn.addEventListener('click', checkPassword);
+            
+            passwordInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    checkPassword();
+                }
+            });
+            
+            function checkPassword() {
+                const enteredPassword = passwordInput.value.trim();
+                
+                if (enteredPassword === correctPassword) {
+                    messageDiv.textContent = "Password correct! Redirecting...";
+                    messageDiv.className = "message success";
+                    
+                    // Show the next link
+                    nextLink.classList.remove('hidden');
+                    
+                    // Clear the password field
+                    passwordInput.value = "";
+                    
+                    // Optional: Auto-redirect after a short delay
+                    setTimeout(function() {
+                        window.location.href = nextLink.href;
+                    }, 1500);
+                } else {
+                    messageDiv.textContent = "Incorrect password. Please try again.";
+                    messageDiv.className = "message error";
+                    
+                    // Clear the password field
+                    passwordInput.value = "";
+                    passwordInput.focus();
+                }
+            }
+        });
+    </script>
 </body>
 </html>
