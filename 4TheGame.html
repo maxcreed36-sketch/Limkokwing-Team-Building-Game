@@ -99,12 +99,13 @@
 </head>
 <body>
     <div class="container">
-        <img src="Ampitheater.jpg" alt="Ampitheater">
+        <img src="4CollaborativeBallGame.jpg" alt="Ampitheater">
         
         <p>
-            Welcome to my simple website! This is a clean and minimal page with a beautiful image at the top 
-            and some text below. You can replace the image and text with anything you like. 
-            The image has a nice dark border and rounded corners to make it look modern and elegant.
+            instruction: Your team must work together to tilt a large maze sheet with a road drawn on it, guiding a ball along the path from start to finish without letting it fall off the road.
+        </p>
+        <p>
+            Ask the Password from the Game Facilitator to proceed to the next level.
         </p>
         
         <div class="password-section">
@@ -131,7 +132,7 @@
             // Function to check password and redirect
             function checkPassword() {
                 const password = passwordInput.value;
-                const correctPassword = "MarkIsHandsome";
+                const correctPassword = "CoolJello";
                 
                 if (password === correctPassword) {
                     message.textContent = "Password correct! Redirecting...";
@@ -139,7 +140,7 @@
                     
                     // Redirect after a short delay to show success message
                     setTimeout(function() {
-                        window.location.href = "https://maxcreed36-sketch.github.io/Limkokwing-Team-Building-Game/1HallOfFameLevel.html#";
+                        window.location.href = "https://maxcreed36-sketch.github.io/Limkokwing-Team-Building-Game/5Level.html#";
                     }, 1000);
                 } else {
                     message.textContent = "Incorrect password. Please try again.";
